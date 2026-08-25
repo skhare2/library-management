@@ -69,3 +69,12 @@ To run this application on your local machine:
 2. Update the `ConnectionString` variable with your local SQL Server instance name:
    ```csharp
    private static readonly string ConnectionString = "Data Source=YOUR_SERVER_NAME;Initial Catalog=Library;Integrated Security=True;TrustServerCertificate=True;";
+
+### 3. Default Login Credentials
+Upon executing `DatabaseSetup.sql`, the system is initialized with the following pre-configured test account:
+
+* **Librarian / Admin Account:**
+  * **Username:** `admin`
+  * **Password:** `Admin123!`
+
+> **Note:** If you updated the seed script with custom usernames or passwords, make sure the credentials above match the records in your `User` table.
