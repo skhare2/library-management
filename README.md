@@ -7,11 +7,11 @@ A desktop library management application built using **C# (Windows Forms)** and 
 ## 🚀 Features
 
 - **User Authentication:** Multi-role login (Student & Librarian) with hashed passwords.
-- **Reservation Workflow:** Queue priority system allowing eligible students to reserve currently unavailable books with built-in active limits and auto-expiration[cite: 1].
-- **Undo Stack:** Revert accidental book returns in the UI using a LIFO data structure[cite: 1].
-- **Late Fee & Analytics Engine:** Automated overdue dynamic calculations and leaderboards for tracking top reading students[cite: 1].
-- **Data Validation:** Strict ISBN-13 check digit validation using alternating weight algorithms[cite: 1].
-- **Dynamic Settings Configuration:** Centralized management for fine rates, checkout durations, and reservation hold limits via system settings[cite: 1].
+- **Reservation Workflow:** Queue priority system allowing eligible students to reserve currently unavailable books with built-in active limits and auto-expiration.
+- **Undo Stack:** Revert accidental book returns in the UI using a LIFO data structure.
+- **Late Fee & Analytics Engine:** Automated overdue dynamic calculations and leaderboards for tracking top reading students.
+- **Data Validation:** Strict ISBN-13 check digit validation using alternating weight algorithms.
+- **Dynamic Settings Configuration:** Centralized management for fine rates, checkout durations, and reservation hold limits via system settings.
 - **Email Notifications:** Automated email capabilities for user communication and password recovery.
 
 ---
@@ -20,30 +20,30 @@ A desktop library management application built using **C# (Windows Forms)** and 
 
 | Feature | Primary Database Entities | Core Technical Rules / Algorithms |
 | :--- | :--- | :--- |
-| **Reservation System** | `Reservation`, `BookCopy`, `Book`, `LibrarySettings` | • Max **1 active reservation** per student[cite: 1].<br>• Max **1 reservation** allowed per book title[cite: 1].<br>• Automatic expiration cleanup based on `Reservation Expire` setting[cite: 1]. |
-| **ISBN-13 Check Digit** | `WishList` | • Alternating $1$ and $3$ weight multiplier algorithm for inputs[cite: 1].<br>• Verifies input string integrity before adding to wishlist[cite: 1]. |
-| **Late Fee Engine** | `BookLoaned`, `Loan`, `LibrarySettings` | • Daily overdue fee calculation formula: $\text{Overdue Days} \times \text{DailyLateFee}$[cite: 1].<br>• Dynamically populated per system configuration settings[cite: 1]. |
-| **Undo Stack (Returns)** | `BookLoaned`, `BookCopy` | • Uses LIFO `StaticStack` array data structure[cite: 1].<br>• Allows librarians to revert accidental book returns in form UI[cite: 1]. |
-| **Leaderboard Analytics** | `Loan`, `BookLoaned`, `Student` | • SQL aggregation utilizing `COUNT()`, `GROUP BY`, and `OFFSET/FETCH` queries[cite: 1].<br>• Ranks top reading students within customizable date ranges[cite: 1]. |
+| **Reservation System** | `Reservation`, `BookCopy`, `Book`, `LibrarySettings` | • Max **1 active reservation** per student.<br>• Max **1 reservation** allowed per book title.<br>• Automatic expiration cleanup based on `Reservation Expire` setting. |
+| **ISBN-13 Check Digit** | `WishList` | • Alternating $1$ and $3$ weight multiplier algorithm for inputs.<br>• Verifies input string integrity before adding to wishlist. |
+| **Late Fee Engine** | `BookLoaned`, `Loan`, `LibrarySettings` | • Daily overdue fee calculation formula: $\text{Overdue Days} \times \text{DailyLateFee}$.<br>• Dynamically populated per system configuration settings. |
+| **Undo Stack (Returns)** | `BookLoaned`, `BookCopy` | • Uses LIFO `StaticStack` array data structure.<br>• Allows librarians to revert accidental book returns in form UI. |
+| **Leaderboard Analytics** | `Loan`, `BookLoaned`, `Student` | • SQL aggregation utilizing `COUNT()`, `GROUP BY`, and `OFFSET/FETCH` queries.<br>• Ranks top reading students within customizable date ranges. |
 
 ---
 
 ## ⚙️ Key Subsystems & Logic
 
 ### Reservation System
-- **Business Logic:** Students can reserve titles that have no available copies remaining. Only one active reservation per student and one reservation per book title is permitted simultaneously[cite: 1].
+- **Business Logic:** Students can reserve titles that have no available copies remaining. Only one active reservation per student and one reservation per book title is permitted simultaneously.
 - **Lifecycle:** When a copy is checked back in, the pending reservation state switches to `Complete` and flags the book for pickup.
 - **Expiration Handling:** An automated process runs on application launch to remove completed reservations exceeding the `Reservation Expire` day limit.
 
 ### ISBN-13 Validation Algorithm
 - Strips hyphens and verifies that the provided input is a valid 13-digit string.
-- Multiplies the first 12 digits alternating between $1$ and $3$, calculates the modulo 10 remainder, and verifies the final check digit before inserting records into the Wishlist table[cite: 1].
+- Multiplies the first 12 digits alternating between $1$ and $3$, calculates the modulo 10 remainder, and verifies the final check digit before inserting records into the Wishlist table.
 
 ### Dynamic System Configuration (`LibrarySettings`)
 Stored in a configurable database table so administrators can update global rules without rebuilding source code:
-- **DailyLateFee:** Daily fine rate per overdue item[cite: 1].
+- **DailyLateFee:** Daily fine rate per overdue item.
 - **DueDateTimeSpan:** Standard checkout duration in days.
-- **Reservation Expire:** Days a completed reservation remains on hold before expiring[cite: 1].
+- **Reservation Expire:** Days a completed reservation remains on hold before expiring.
 - **StudentUsernameLength & SchoolDomain:** Input validation constraints.
 
 ---
