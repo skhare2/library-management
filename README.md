@@ -69,6 +69,7 @@ To run this application on your local machine:
 2. Update the `ConnectionString` variable with your local SQL Server instance name:
    ```csharp
    private static readonly string ConnectionString = "Data Source=YOUR_SERVER_NAME;Initial Catalog=Library;Integrated Security=True;TrustServerCertificate=True;";
+<<<<<<< HEAD
 
 ### 3. Default Login Credentials
 Upon running the application with the default seed data, you can log in using the pre-configured admin/librarian account:
@@ -78,3 +79,5 @@ Upon running the application with the default seed data, you can log in using th
 * **Password:** `Admin123!` *(or whatever default password is seeded)*
 
 > **Note:** Make sure to change or remove default credentials before deploying to a production environment.
+=======
+>>>>>>> c87fefc406c7e943655966c074b47e1cae3c8661
